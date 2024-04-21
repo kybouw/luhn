@@ -40,11 +40,11 @@ func calculateCheckDigit(payload string) (int, error) {
 		return 0, err
 	}
 
-	var checkDigit int = 10 - (sumDigits % 10)
+	var checkDigit int = (10 - (sumDigits % 10)) % 10
 	return checkDigit, nil
 }
 
-func Verify(number string) bool {
+func Validate(number string) bool {
 	var checkDigit string = number[len(number)-1:]
 	var payload string = number[:len(number)-1]
 	calculatedCheckDigit, err := calculateCheckDigit(payload)
