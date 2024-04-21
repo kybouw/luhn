@@ -40,7 +40,7 @@ func calculateCheckDigit(payload string) (int, error) {
 		return 0, err
 	}
 
-	var checkDigit int = 10 - (sumDigits % 10)
+	var checkDigit int = (10 - (sumDigits % 10)) % 10
 	return checkDigit, nil
 }
 
