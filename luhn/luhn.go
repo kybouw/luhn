@@ -44,7 +44,7 @@ func calculateCheckDigit(payload string) (int, error) {
 	return checkDigit, nil
 }
 
-func Verify(number string) bool {
+func Validate(number string) bool {
 	var checkDigit string = number[len(number)-1:]
 	var payload string = number[:len(number)-1]
 	calculatedCheckDigit, err := calculateCheckDigit(payload)

@@ -1,20 +1,24 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
+	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/kybouw/luhn/luhn"
 )
 
+func validate(w http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	number := vars["number"]
+	json.NewEncoder(w).Encode(luhn.Validate(number))
+}
+
 func main() {
-	fmt.Println("Hello, welcome to luhn!")
+	router := mux.NewRouter()
 
-	var testString string = "17893729974"
-	fmt.Printf("Validating: %s ... ", testString)
-	if luhn.Verify(testString) {
-		fmt.Print("GOOD\n")
-	} else {
-		fmt.Print("BAD\n")
-	}
+	router.HandleFunc("/validate/{number}", validate).Methods("GET")
 
+	log.Fatal(http.ListenAndServe(":8000", router))
 }
